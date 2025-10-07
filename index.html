@@ -8,68 +8,63 @@
 <body>
     
     <h2>Lokasi</h2>
-    <input type="text" id="lokasiInput" placeholder="Masukkan lokasi">
-    <button id="cariBtn">Cari</button>
+    <input type="text" id="inputLokasi" placeholder="Masukkan lokasi">
+    <button id="btnCari">Cari</button>
 
-
-    
     <h3>Cuaca</h3>
-    <p>Suhu Celsius: <span id="suhuC"></span> °C</p>
-    <p>Suhu Fahrenheit: <span id="suhuF"></span> °F</p>
-    <p>Kelembapan: <span id="humidity"></span> %</p>
+    <p>Suhu Celsius: <span id="suhuC">-</span> °C</p>
+    <p>Suhu Fahrenheit: <span id="suhuF">-</span> °F</p>
+    <p>Kelembapan: <span id="humidity">-</span> %</p>
 
-        
-    
     <hr>
+
     <h3>Lokasi</h3>
-    <p>Negara: <span id="negara"></span></p>
-    <p>Provinsi: <span id="provinsi"></span></p>
-    <p>Kota/Kecamatan: <span id="kecamatan"></span></p>
-    <p>Longitude: <span id="lon"></span></p>
-    <p>Latitude: <span id="lat"></span></p>
-</div>
-    
+    <p>Negara: <span id="negara">-</span></p>
+    <p>Provinsi: <span id="provinsi">-</span></p>
+    <p>Kota/Kecamatan: <span id="kecamatan">-</span></p>
+    <p>Longitude: <span id="lon">-</span></p>
+    <p>Latitude: <span id="lat">-</span></p>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" 
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
-<script>
-    const API_KEY = "0d824dbb244e45d195d65533250710";
 
+    <script>
+        const API_KEY = "0d824dbb244e45d195d65533250710";
 
-function ambilCuaca(lokasi) {
-        const urlapi = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${lokasi}&aqi=no`;
-        $.ajax({
-            url: urlapi,
-            method: "GET",
-            success: function(data) {
-                console.log(data);
-                $("#suhuC").text(data.current.temp_c);
-                $("#suhuF").text(data.current.temp_f);
-                $("#humidity").text(data.current.humidity);
-                $("#negara").text(data.location.country);
-                $("#provinsi").text(data.location.region);
-                $("#kecamatan").text(data.location.name);
-                $("#lon").text(data.location.lon);
-                $("#lat").text(data.location.lat);
-            },
-            error: function(error) {
-                alert("Lokasi tidak ditemukan atau terjadi kesalahan!");
-                console.log(error);
+        // Fungsi ambil cuaca
+        function ambilCuaca(lokasi) {
+            const urlapi = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${lokasi}&aqi=no`;
+            $.ajax({
+                url: urlapi,
+                method: "GET",
+                success: function(data) {
+                    console.log(data);
+                    $("#suhuC").text(data.current.temp_c);
+                    $("#suhuF").text(data.current.temp_f);
+                    $("#humidity").text(data.current.humidity);
+                    $("#negara").text(data.location.country);
+                    $("#provinsi").text(data.location.region);
+                    $("#kecamatan").text(data.location.name);
+                    $("#lon").text(data.location.lon);
+                    $("#lat").text(data.location.lat);
+                },
+                error: function(error) {
+                    alert("Lokasi tidak ditemukan atau terjadi kesalahan!");
+                    console.log(error);
+                }
+            });
+        }
+
+        // Tombol Cari
+        $("#btnCari").click(function() {
+            const lokasi = $("#inputLokasi").val();
+            if (lokasi) {
+                ambilCuaca(lokasi);
+            } else {
+                alert("Masukkan lokasi terlebih dahulu!");
             }
         });
-    }
-
-    // Tombol Cari
-    $("#btnCari").click(function() {
-        const lokasi = $("#inputLokasi").val();
-        if (lokasi) {
-            ambilCuaca(lokasi);
-        } else {
-            alert("Masukkan lokasi terlebih dahulu!");
-        }
-    });
-
-
+    </script>
 </body>
 </html>
