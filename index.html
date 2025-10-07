@@ -60,6 +60,16 @@ function ambilCuaca(lokasi) {
         });
     }
 
+    // Tombol Cari
+    $("#btnCari").click(function() {
+        const lokasi = $("#inputLokasi").val();
+        if (lokasi) {
+            ambilCuaca(lokasi);
+        } else {
+            alert("Masukkan lokasi terlebih dahulu!");
+        }
+    });
+
 
 </body>
 </html>
